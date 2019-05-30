@@ -1,46 +1,66 @@
+// главная функция - возвращает статус игры
 function checkTicTacToe(input) {
-  const sizeBoard = 3, wonX = 15, multipleX = 5, wonO = 6;
-  let result = 0;
-  let horizontal = 0, vertical1 = 0, vertical2 = 0, vertical3 = 0;
-  let isPlaing = input.some(row => {
-    return row.includes(0);
-  });
-  
-  if(input.length === sizeBoard && 
-    input.every(element => element.length === sizeBoard)) {
-      input.some(row => {
-        let [first, second, third] = row;
+  const sizeBoard = 3;
+  let result = 0, checkArgument, checkZero;
+  let wonX = Math.pow(1, sizeBoard), wonO = Math.pow(2,sizeBoard);
 
-        if(!row.includes(0)) {
-          horizontal = first + second + third;
-        }
-        
-        if(first > 1) { vertical1 += first; } else if(first === 1) {
-          vertical1 += (first * multipleX);
-        }
+  checkArgument = validArgument(input);
 
-        if(second > 1) { vertical2 += second;} else if(second === 1) {
-          vertical1 += (second * multipleX);
-        }
-
-        if(third > 1) { vertical3 += third; } else if(third === 1) {
-          vertical1 += (third * multipleX);
-        }
-
-        let checkValue = [horizontal, vertical1, vertical2, vertical3];
-        
-        if(checkValue.includes(wonX)) {
-          result = 1;
-        } else if(checkValue.includes(wonO)) {
-          result = 2;
-        }
-        return result > 0;
-    });
-        
-    if(isPlaing && result < 1) { result = -1; }
-  }
-
+  if(checkArgument) {
+    checkZero = input.some(element => element.includes(0));
+    result = checkDiagonal(input, wonX, wonO);
+    if(!result) result = checkWin(input, wonX, wonO);
+    if(!result && checkZero) result = -1;
+  } else { result = 'Wrong argument!'; }
  return result;
 }
+// функция проверяет наличие и корректность аргументов
+function validArgument(input) {
+  let isArray, isValidArray, validSize, sizeRow = input.length;
+
+  isArray = Array.isArray(input);
+  isValidArray = input.every(element => {
+    let isInt = element.every(item => Number.isInteger(item));
+    return Array.isArray(element) && isInt;
+  });
+  validSize = input.every(element => element.length === sizeRow);
   
-console.log(checkTicTacToe([[1, 2, 1], [2, 1, 1], [2, 1, 2]]));
+  return (isArray && isValidArray && validSize);
+}
+// ищет победную комбинацию по диагонали
+function checkDiagonal(input, wonX, wonO) {
+  let diagonalFirst = 1, diagonalSecond = 1, result = 0;
+  let index = input.length - 1;
+  for(let i = 0; i <= index; i++) {
+    diagonalFirst *= input[i][i];
+    diagonalSecond *= input[i][index - i];
+  }
+  if(diagonalFirst === wonX || diagonalSecond === wonX) {
+    result = 1;
+  }
+  if(diagonalFirst === wonO || diagonalSecond === wonO) {
+    result = 2;
+  }
+  return result;
+}
+// ищет победную комбинацию по горизонтали и вертикали
+function checkWin(input, wonX, wonO) {
+  let result = 0;
+  input.some((row, rowIndex, input) => {
+    let horizontal = 1, vertical = 1, numOfIteration = row.length;
+    for( let i = 0; i < numOfIteration; i++) {
+      horizontal *= input[rowIndex][i];
+      vertical *= input[i][rowIndex];
+    }
+    if(horizontal === wonX || vertical === wonX) {
+      result = 1;
+    }
+    if(horizontal === wonO || vertical === wonO) {
+      result = 2;
+    }
+    return result > 0;
+   });    
+   return result;
+}
+
+console.log(checkTicTacToe([[1,1,2], [2,2,1], [1,1,1]]));
