@@ -27,6 +27,9 @@ Next Version
 Tic Tac Toe
 [Tic Tac Toe](https://github.com/Sertya/ssHomeWork/blob/master/Task7/ticTacToe.js "Tic Tac Toe")
 
-#### Task8:
-Battle Ships
+#### Battle ships:
 [Battle Ships](https://github.com/Sertya/ssHomeWork/tree/master/Task8 "Battle Ships")
+
+#### Methods:
+[Methods](https://github.com/Sertya/ssHomeWork/tree/master/Methods "Methods")
+
