@@ -1,7 +1,15 @@
-describe("toLowerCase", function() {
+describe("myIndexOf", function() {
 
-  it("возвращает значение строки, на которой он был вызван, преобразованное в нижний регистр", function() {
-    assert.equal(toLowerCase('TO LOWER CASE'), 'to lower case');
+  it("return index", function() {
+    assert.equal(myIndexOf('New day, new life!', 'new'), 9);
+  });
+
+});
+
+describe("myLastIndexOf", function() {
+
+  it("return last index", function() {
+    assert.equal(myLastIndexOf('New day, new life!', 'new'), 9);
   });
 
 });
