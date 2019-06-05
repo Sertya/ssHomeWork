@@ -14,7 +14,7 @@ describe("battleShipScore", function() {
 describe("battleShipScore", function() {
 
   it("Считает результат морского боя", function() {
-    assert.equal(battleShipScore([
+    assert.deepEqual(battleShipScore([
       [0,0,0,2,2,0],
       [0,3,0,0,0,0],
       [0,3,0,1,0,0],

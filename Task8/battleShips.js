@@ -22,6 +22,7 @@ function battleShipScore(board, attaks) {
       }
     }
   } else { result = 'Wrong arguments!'}
+  console.log(result);
   return result;
 }
 ///get initial Object of boats 
