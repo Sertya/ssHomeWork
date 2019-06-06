@@ -19,6 +19,12 @@
 
 [Methods](https://github.com/Sertya/ssHomeWork/tree/master/Methods "Methods")
 
+[mixSequence nacci](https://github.com/Sertya/ssHomeWork/tree/master/mixSequence "mixSequence nacci")
+
+[PlusMinusSum](https://github.com/Sertya/ssHomeWork/tree/master/PlusMinusSum "PlusMinusSum")
+
+[Countdown](https://github.com/Sertya/ssHomeWork/tree/master/Countdown "Countdown")
+
 ### Elementary Task:
 [chessBoard](https://github.com/Sertya/ssHomeWork/blob/master/ElementaryTask/src/task1.js "chessBoard")
 
