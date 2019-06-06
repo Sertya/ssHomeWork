@@ -19,7 +19,7 @@
 
 [Methods](https://github.com/Sertya/ssHomeWork/tree/master/Methods "Methods")
 
-[mixSequence nacci](https://github.com/Sertya/ssHomeWork/tree/master/mixSequence "mixSequence nacci")
+[mixSequence nacci](https://github.com/Sertya/ssHomeWork/blob/master/mixSequence/index.html "mixSequence nacci")
 
 [PlusMinusSum](https://github.com/Sertya/ssHomeWork/tree/master/PlusMinusSum "PlusMinusSum")
 
