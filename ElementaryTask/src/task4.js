@@ -1,5 +1,8 @@
-function longestPalindrom(input) {
-  let str = input.toString(10), length = str.length, testValue, palindrom = '';
+export default function longestPalindrom(input) {
+  let str = input.toString(10),
+      length = str.length,
+      testValue,
+      palindrom = '';
   
   for (let i = length; i >= 2; i--) {
     for(let j = 0; j <= length -i ; j++) {
@@ -15,7 +18,9 @@ function longestPalindrom(input) {
 }
 
 function isPalindrom(str) {
-  let result = true, left = 0; right = str.length-1;
+  let result = true, 
+      left = 0,
+      right = str.length-1;
 
   while(left <= right) {
     if (str[left] !== str[right]) {
@@ -25,8 +30,5 @@ function isPalindrom(str) {
     left++;
     right--;
   }
-
   return result;
 }
-
-console.log(longestPalindrom(1234565432175211));

@@ -1,6 +1,8 @@
 import chessBoard from './src/task1.js';
 import compareEnvelopes from './src/task2.js';
 import sortingTriangles from './src/task3.js';
+import longestPalindrom from './src/task4.js';
+import luckyTickets from './src/task5.js';
 
 
 console.log(chessBoard(25, 9, '*'));
@@ -14,3 +16,7 @@ let arrayOfObj = [
     {vertices: 'XYZ', x: 10.5, y: 20.5, z: 30}
 ];
 console.log(sortingTriangles(arrayOfObj));
+
+console.log(longestPalindrom(1234565432175211));
+
+console.log(luckyTickets({min: 100000, max: 999999}));
