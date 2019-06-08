@@ -26,11 +26,7 @@
 [Countdown](https://github.com/Sertya/ssHomeWork/tree/master/Countdown "Countdown")
 
 ### Elementary Task:
-[chessBoard](https://github.com/Sertya/ssHomeWork/blob/master/ElementaryTask/src/task1.js "chessBoard")
 
-[Envelopes](https://github.com/Sertya/ssHomeWork/blob/master/ElementaryTask/src/task2.js "Envelopes")
+[Elementary Task](https://sertya.github.io/ssHomeWork/ElementaryTask "ElementaryTask")
 
-[Triangles](https://github.com/Sertya/ssHomeWork/blob/master/ElementaryTask/src/task3.js "Triangles")
-
-[Palindrom](https://github.com/Sertya/ssHomeWork/blob/master/ElementaryTask/src/task4.js "Palindrom")
 
