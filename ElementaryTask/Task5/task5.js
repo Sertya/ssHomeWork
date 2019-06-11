@@ -60,5 +60,5 @@ function checkArgument(argument) {
   } else { return false; }
 }
 
-console.log(luckyTickets({min: 100000, max: 999999}));
+console.log(luckyTickets({min: 100100, max: 100199}));
 
