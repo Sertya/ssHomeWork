@@ -1,4 +1,23 @@
 # ssHomeWork
+
+### Elementary Task:
+
+[Task1](https://sertya.github.io/ssHomeWork/ElementaryTask/Task1 "Task1")
+
+[Task2](https://sertya.github.io/ssHomeWork/ElementaryTask/Task2 "Task2")
+
+[Task3](https://sertya.github.io/ssHomeWork/ElementaryTask/Task3 "Task3")
+
+[Task4](https://sertya.github.io/ssHomeWork/ElementaryTask/Task4 "Task4")
+
+[Task5](https://sertya.github.io/ssHomeWork/ElementaryTask/Task5 "Task5")
+
+[Task6](https://sertya.github.io/ssHomeWork/ElementaryTask/Task6 "Task6")
+
+[Task7](https://sertya.github.io/ssHomeWork/ElementaryTask/Task7 "Task7")
+
+
+
 ## Soft Serve Home Work
 
 [Juice](https://github.com/Sertya/ssHomeWork/blob/master/Task1/juice.js "Juice")
@@ -25,8 +44,5 @@
 
 [Countdown](https://github.com/Sertya/ssHomeWork/tree/master/Countdown "Countdown")
 
-### Elementary Task:
-
-[Task1](https://sertya.github.io/ssHomeWork/ElementaryTask/Task1 "Task1")
 
 
