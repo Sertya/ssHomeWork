@@ -27,6 +27,6 @@
 
 ### Elementary Task:
 
-[Elementary Task](https://sertya.github.io/ssHomeWork/ElementaryTask "ElementaryTask")
+[Task1](https://sertya.github.io/ssHomeWork/ElementaryTask/Task1 "Task1")
 
 
