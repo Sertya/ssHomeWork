@@ -5,20 +5,22 @@
 button {
   outline: none;
 }
+
 .calend_wrapper {
-  background-color: #3c3c3c;
-  color: #ffffff;
   width: 400px;
   margin: 0 auto;
   padding: 30px 25px;
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
+  color: #ffffff;
+  background-color: #3c3c3c;
 }
-.calend_header .timer {
+
+.timer {
   font-size: 65px;
   font-weight: 100;
 }
-.calend_header .current_string_date {
+.current_string_date {
   margin: 20px 0 30px 0;
   font-size: 20px;
   color: #3c8ac8;
@@ -35,14 +37,17 @@ button {
   margin: 30px 0;
   font-size: 20px;
 }
+
 .current_month_year {
   width: 153px;
   text-align: center;
 }
+
 .calend_navigation_month, .calend_navigation_day {
   display: flex;
   justify-content: space-between;
 }
+
 .prev_month, .next_month, .prev_day, .next_day {
   width: 20px;
   height: 20px;
@@ -51,27 +56,33 @@ button {
   border: unset;
   cursor: pointer;
 }
+
 .prev_month {
   background-image: url(img/left_month.svg);
   background-size: contain;
 }
+
 .next_month {
   background-image: url(img/right_month.svg);
   background-size: contain;
 }
+
 .prev_day {
   background-image: url(img/left_day.svg);
   background-size: contain;
 }
+
 .next_day {
   background-image: url(img/right_day.svg);
   background-size: contain;
 }
+
 .calend_table, .week_days {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
 .calend_table div, .week_days div{
   width: 48px;
   height: 42px;
@@ -81,14 +92,17 @@ button {
   line-height: 42px;
   /* border: solid 2px unset; */
 }
+
 .another_month {
   opacity: 0.5;
 }
+
 .current_day {
   background-color: #3c8ac8;
   outline: solid 2px #000000;
   outline-offset: -4px;
 }
+
 .active {
   outline: solid 2px #3c8ac8;
   outline-offset: -2px;
