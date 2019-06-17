@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Calendar</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400&display=swap" rel="stylesheet">
+</head>
+<body onload="loadingCalendar()">
+  <div class="calend_wrapper">
+      <div class="calend_header">
+        <p class ="timer">Time</p>
+        <p class="current_string_date">Date Month Year</p>
+      </div>
+      <div class="calend_navigation">
+        <div class="calend_navigation_month">
+          <button class="prev_month"></button>
+          <p class="current_month_year">Current Month and Year</p>
+          <button class="next_month"></button>
+        </div>
+        <div class="calend_navigation_day">
+          <button class="prev_day"></button>
+          <button class="next_day"></button>
+        </div>
+      </div>
+      <div class="week_days">
+        <div>Пн</div>
+        <div>Вт</div>
+        <div>Ср</div>
+        <div>Чт</div>
+        <div>Пт</div>
+        <div>Сб</div>
+        <div>Вс</div>
+      </div>
+      <div class="calend_table">
+      </div>
+  </div>
+  
+  <script src="./calendar.js"></script>
+</body>
+</html>
