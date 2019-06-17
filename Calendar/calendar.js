@@ -1,15 +1,13 @@
+const date = new Date();
+
+// запускается при загрузке страницы
 function loadingCalendar() {
-  let date = new Date(),
-      currYear = date.getFullYear(),
-      currMonth = date.getMonth();
-
   getTimer();
-  createCalendar(date, currYear, currMonth);
-  changeMonth(date, currYear, currMonth);
-  changeDay(date, currYear, currMonth);
-  
+  createCalendar();
+  changeMonth();
+  changeDay();
 }
-
+// идущие часы
 function getTimer() {
   let time = new Date();
 
@@ -17,23 +15,31 @@ function getTimer() {
 
   return setTimeout('getTimer()', 500);
 }
+
 // строит календарь
-function createCalendar(date, currYear, currMonth) {
-  console.log(date.toLocaleDateString());
-  let optionsFirst = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'},
+function createCalendar() {
+  let currYear = date.getFullYear(),
+      currMonth = date.getMonth(),
+      optionsFirst = { 
+        weekday: 'long', 
+        day: 'numeric', 
+        month: 'long', 
+        year: 'numeric'
+      },
       optionsSecond = {month: 'long', year: 'numeric'},
-      stringDate = date.toLocaleDateString('default', optionsFirst),
-      monthYear = date.toLocaleDateString('default', optionsSecond);
+      stringDate = date.toLocaleDateString('ru', optionsFirst),
+      monthYear = date.toLocaleDateString('ru', optionsSecond);
 
-  document.querySelector('.current_string_date').innerHTML = stringDate;
-  document.querySelector('.current_month_year').innerHTML = monthYear;
+  document.querySelector('.current_string_date').innerText = stringDate;
+  document.querySelector('.current_month_year').innerText = monthYear;
 
-  let startMonth = new Date(currYear, currMonth, 1),
-      firstDay = startMonth.getDay() == 0 ? 6 : startMonth.getDay() - 1,
+  date.setDate(1);
+
+  let firstDay = date.getDay() == 0 ? 6 : date.getDay() - 1,
       today = new Date(),
       currDate = date.getMonth() === today.getMonth() ? today.getDate() : date.getDate();
 
-  date.setDate(startMonth.getDate() - firstDay);
+  date.setDate(date.getDate() - firstDay);
 
   const countCells = 42; // number of days in a week;
 
@@ -49,69 +55,100 @@ function createCalendar(date, currYear, currMonth) {
       div.className = 'current_day';
     }
 
-    div.innerHTML = date.getDate();
+    div.innerText = date.getDate();
     document.querySelector('.calend_table').appendChild(div);
 
     date.setDate(date.getDate() + 1);
   }
+  date.setDate(0);
 }
-// слушает клики меняет месяц
-function changeMonth(date, currYear, currMonth) {
-  document.querySelector('.calend_navigation_month').addEventListener("click", (event) => {
-    if(event.target.classList.contains('prev_month')) {
-      date = new Date(currYear, currMonth - 1, 1);
-    }
 
-    if(event.target.classList.contains('next_month')) {
-      date = new Date(currYear, currMonth + 1, 1);
-    }
+// слушает событие чтобы изменить месяц
+function changeMonth() {
+  let targetToNext = document.querySelector('.next_month'),
+      targetToPrev = document.querySelector('.prev_month');
 
-    currMonth = date.getMonth();
-    currYear = date.getFullYear();
+  targetToNext.addEventListener('click', changeMonthToNext);
+  targetToPrev.addEventListener('click', changeMonthToPrev);
+}
+
+// строит календарь на следующий месяц
+function changeMonthToNext() {
+  date.setDate(1);
+  date.setMonth(date.getMonth() + 1);
+
+  clearCalendar();
+  createCalendar(date);
+}
+
+// строит календарь на предыдущий месяц
+function changeMonthToPrev() {
+  date.setDate(1);
+  date.setMonth(date.getMonth() - 1);
+
+  clearCalendar();
+  createCalendar(date);
+}
+
+// слушает клики чтобы  перемещаться по дням
+function changeDay() {
+  let targetToNext = document.querySelector('.next_day'),
+      targetToPrev = document.querySelector('.prev_day');
+
+  targetToNext.addEventListener('click', changeDayToNext);
+  targetToPrev.addEventListener('click', changeDayToPrev);
+}
+
+// подсвечивает следующий день
+function changeDayToNext() {
+  let currActiveElement = document.querySelector('.active'),
+      nextActiveElement;
+
+  if(currActiveElement !== null) {
+    currActiveElement.classList.remove('active');
+  } else {
+    currActiveElement = document.querySelector('.current_day');
+  }
+
+  nextActiveElement = currActiveElement.nextElementSibling;
+
+  if(nextActiveElement) {
+    nextActiveElement.classList.add('active');
+  } else {
+    date.setDate(1);
+    date.setMonth(date.getMonth() + 1);
 
     clearCalendar();
-    createCalendar(date, currYear, currMonth);
+    createCalendar(date);
 
-    console.log(' hangeMonth  end' + date.toLocaleDateString());
-  });
+    document.querySelector('.calend_table').firstChild.classList.add('active');
+  }
 }
-// слушает клики на одинарные стрелки, меняет подсветку дней
-function changeDay(date, currYear, currMonth) {
-  document.querySelector('.calend_navigation_day').addEventListener("click", (event) => {
-    let currActiveElement = document.querySelector('.active'),
-        nextActiveElement;
 
-    if(currActiveElement === null) {
-      currActiveElement = document.querySelector('.current_day');
-    }
+// подсвечивает предыдущий день
+function changeDayToPrev() {
+  let currActiveElement = document.querySelector('.active'),
+      nextActiveElement;
 
-    if(event.target.classList.contains('prev_day')) {
-      nextActiveElement = currActiveElement.previousElementSibling;
-      
-      if(!nextActiveElement) {
-        date = new Date(currYear, currMonth - 1, 1);
-      } 
-    }
+  if(currActiveElement !== null) {
+    currActiveElement.classList.remove('active');
+  } else {
+    currActiveElement = document.querySelector('.current_day');
+  }
 
-    if(event.target.classList.contains('next_day')) {
-      nextActiveElement = currActiveElement.nextSibling;
+  nextActiveElement = currActiveElement.previousElementSibling;
 
-      if(!nextActiveElement) {
-        date = new Date(currYear, currMonth + 1, 1);
-      } 
-    } 
-    
-    if(nextActiveElement) {
-      toggleClass(currActiveElement, nextActiveElement);
-    } else {
-      currMonth = date.getMonth();
-      currYear = date.getFullYear();
+  if(nextActiveElement) {
+    nextActiveElement.classList.add('active');
+  } else {
+    date.setDate(1);
+    date.setMonth(date.getMonth() - 1);
 
-      clearCalendar();
-      createCalendar(date, currYear, currMonth);
-    }
-  });
-  
+    clearCalendar();
+    createCalendar(date);
+
+    document.querySelector('.calend_table').lastChild.classList.add('active');
+  }
 }
 // очищает календарь
 function clearCalendar() {
@@ -120,13 +157,4 @@ function clearCalendar() {
     while (element.lastChild) {
       element.removeChild(element.lastChild);
     }
-}
-// меняет класс для изменения подсветки по дням
-function toggleClass(currActiveElement, nextActiveElement) {
-  if(currActiveElement.className !== 'current_day') {
-       currActiveElement.classList.remove('active');
-  } 
-
-  nextActiveElement.classList.add('active');
-
 }
