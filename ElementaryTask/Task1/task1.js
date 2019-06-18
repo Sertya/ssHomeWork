@@ -22,7 +22,7 @@ function chessBoard(width, height, char) {
     }
   } else {
     result = {
-      status: 'faild', 
+      status: 'failed', 
       reason: 'Three arguments are expected: integer, integer, string with length = 1'
     };
   }
@@ -36,14 +36,14 @@ function checkArguments(width, height, char) {
   if (!Number.isInteger(width) || width === 0 ||
       !Number.isInteger(height) || height === 0) {
         result = {
-          status: 'faild', 
+          status: 'failed', 
           reason: 'First and second arguments expected to be integer and mor than 0'
         };
   }
 
   if (typeof char !== 'string' || char.length !== 1) {
     result = {
-      status: 'faild', 
+      status: 'failed', 
       reason: 'Third argument expected to be string with length = 1'
     };
   } 

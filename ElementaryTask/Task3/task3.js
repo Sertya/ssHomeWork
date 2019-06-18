@@ -1,44 +1,78 @@
 function sortingTriangles(arrayOfTriangles) {
-  let result = [];
+  let result;
   
-  if(arguments.length !==0 && validArgument(arrayOfTriangles)) {
-    arrayOfTriangles.forEach(triangle => {
-     let [a, b, c] = triangle.vertices.toLowerCase(),
-         p = 0;
+  if(arguments.length !==0 ) {
+    result = validArgument(arrayOfTriangles);
 
-     a = triangle[a];
-     b = triangle[b];
-     c = triangle[c];
-     // расчет полупериметра 
-     p = (a + b + c) / 2;
-     // расчет площади
-     triangle.area = Math.sqrt(p * (p - a) * (p - b) * (p - c)); 
-    }); 
-    arrayOfTriangles.sort((a,b) => b.area - a.area);
-    arrayOfTriangles.forEach(triangle => {
-      result.push(triangle.vertices);
-    });
+    if(result === true) {
+      result = [];
+      arrayOfTriangles.forEach(triangle => {
+        let [a, b, c] = triangle.vertices.toLowerCase(),
+            p = 0; // полупериметр
+   
+        a = triangle[a];
+        b = triangle[b];
+        c = triangle[c];
+        // расчет полупериметра 
+        p = (a + b + c) / 2;
+        // расчет площади
+        triangle.area = Math.sqrt(p * (p - a) * (p - b) * (p - c)); 
+
+      }); 
+   
+      arrayOfTriangles.sort((a,b) => b.area - a.area);
+   
+      arrayOfTriangles.forEach(triangle => {
+         result.push(triangle.vertices);
+      });
+    }
+
   } else {
-    result = {status: 'failed', reason: 'Invalid argument is entered!'}
+    result = {status: 'failed', reason: 'Missing argument, a list of triangles is expected!'};
   }
+
   return result;
 }
+
 // функция проверки аргументов
 function validArgument(argument) {
-  let isArray = Array.isArray(argument);
-  if(isArray) {
-    let validObject = argument.every(element => {
-      let isObject = element.constructor === Object;
-      let [vertices, a, b, c] = Object.values(element);
-      let isString = typeof vertices === 'string' && vertices.length === 3;
-      let isNumeric = [a,b,c].every(item => {
-          return !isNaN(parseFloat(item)) && isFinite(item) && item > 0;
-        });;
-        let validTriangles = (a + b) > c && (a + c) > b && (b + c) > a;
-      return isObject && isString && isNumeric && validTriangles;
-    });
-    return isArray && validObject;
+  let result = true,
+      arrayOfNum = [],
+      triangles = [];
+
+  argument.forEach(element => {
+    let [, a, b, c] = Object.values(element),
+        triangle;
+
+    arrayOfNum.push(a,b,c);
+    
+    triangle = (a + b) > c && (a + c) > b && (b + c) > a;
+
+    triangles.push(triangle);
+
+  });
+
+  let isNumber = arrayOfNum.every( item => {
+    return typeof(item) === 'number';
+  });
+
+  let isTriangle = triangles.every( item => {
+    return item === true;
+  });
+
+  if(!isNumber) {
+    result = {
+      status: 'failed',
+      reason: 'Some of values in argument is not a number!'
+    };
+  } else if(!isTriangle) {
+    result = {
+      status: 'failed',
+      reason: 'Some of values in argument is not a triangle!'
+    };
   }
+
+  return result;
 }
 
 let arrayOfObj = [

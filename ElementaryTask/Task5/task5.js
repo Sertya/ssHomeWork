@@ -2,63 +2,98 @@ function luckyTickets(context) {
   const size = 6;
   let ticketNumber = '',
       result = {simple: 0, complicated: 0, winner: ''};
-  if(arguments.length !== 0 && checkArgument(context)) {
-    let start = context.min,
+
+  if(arguments.length !== 0) {
+    let check = checkArgument(context);
+
+    if(check === 0) {
+      let start = context.min,
         end = context.max;
-    for(start; start <= end; start++) {
-      ticketNumber = toSixLen(start, size);
-      if(simpleMethod(ticketNumber, size)) {
-        result.simple++;
+
+      for(start; start <= end; start++) {
+        ticketNumber = toSixLen(start, size);
+
+        if(simpleMethod(ticketNumber, size)) {
+          result.simple++;
+        }
+
+        if(complicatedMethod(ticketNumber, size)) {
+          result.complicated++;
+        }
       }
-      if(complicatedMethod(ticketNumber, size)) {
-        result.complicated++;
-      }
-     }
-    result.winner = result.simple > result.complicated ?  'simple' : 'complicated';
+
+      result.winner = result.simple > result.complicated ?  'simple' : 'complicated';
+    } else {
+      result = check;
+    }
   } else {
-    result = {status: 'failed', reason: 'Missing argument or argument is not correct!'};
+    result = {status: 'failed', reason: 'Missing argument!'};
   }
+
   return result;
 }
 // добавляет необходимое количество нулей перед номером билета
 function toSixLen(start, size) {
   let result = '' + start;
+
   while(result.length < size) {
     result = '0' + result;
   }
+
   return result;
 }
 // считает по простому методу
 function simpleMethod(ticketNumber, size) {
   let sumLeft = 0,
       sumRight = 0;
+
   for (let i = 0; i < size; i++) {
-    i < 3 ? sumLeft += Number(ticketNumber[i], 10) : sumRight += Number(ticketNumber[i], 10);
+    if(i < 3) {
+      sumLeft += Number(ticketNumber[i], 10);
+    } else {
+      sumRight += Number(ticketNumber[i], 10);
+    } 
   }
+
   return sumLeft === sumRight;
 }
 // считает по сложному методу
 function complicatedMethod(ticketNumber, size) {
   let sumLeft = 0,
       sumRight = 0;
+
   for (let i = 0; i < size; i++) {
+
     if(ticketNumber[i] % 2 === 0) {
       sumLeft += Number(ticketNumber[i], 10);
     } else {
       sumRight += Number(ticketNumber[i], 10);
     }
   }
+
   return sumLeft === sumRight;
 }
 // функция проверки аргументов
 function checkArgument(argument) {
-  if(argument.constructor === Object && 
-     argument.hasOwnProperty('min') && 
-     argument.hasOwnProperty('max')) {
-       return argument.min > 0 && argument.min <= 999999 &&
-              argument.max > 0 && argument.max <= 999999;
-  } else { return false; }
+  let result = 0,
+      [min, max] = Object.values(argument);
+
+  if(typeof min !== 'number' || min < 0 || min > 999999) {
+    result = {
+      status: 'failed', 
+      reason: 'First argument should be number in range of 0 to 999999!'
+    };
+  }
+
+  if(typeof max !== 'number' || max < 0 || max > 999999) {
+    result = {
+      status: 'failed', 
+      reason: 'Second argument should be number in range of 0 to 999999!'
+    };
+  }
+
+  return result;
 }
 
-console.log(luckyTickets({min: 100100, max: 100199}));
+console.log(luckyTickets({min: 333333, max: 444444}));
 

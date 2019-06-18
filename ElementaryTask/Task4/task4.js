@@ -9,16 +9,19 @@ function longestPalindrom(input) {
     for (let i = length; i >= 2; i--) {
       for(let j = 0; j <= length -i ; j++) {
        testValue = str.slice(j,j + i);
+
        if(isPalindrom(testValue)) {
         palindrom = testValue;
          break;
          }
       }
+
       if(palindrom !== 0) break;
     }
   } else {
     palindrom = {status: 'failed', reason: 'Expected number more than 10 as an argument!'};
   }
+
   return palindrom;
 }
 
@@ -32,9 +35,11 @@ function isPalindrom(str) {
       result = false;
       break;
     }
+    
     left++;
     right--;
   }
+  
   return result;
 }
 
