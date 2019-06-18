@@ -1,6 +1,5 @@
 function createFibonacci(context) {
-  let result = [0, 1],
-      index;
+  let result = [0, 1];
 
   if(arguments.length !== 0) {
 
@@ -11,7 +10,7 @@ function createFibonacci(context) {
       } 
   
       if('min' in context && 'max' in context) {
-        result = getFibonacciByRange(context.min, context.max, result, index)
+        result = getFibonacciByRange(context.min, context.max, result);
       }
     } else {
       result = {status: 'failed', reason: 'The value of min and max must be a number!'};
@@ -35,7 +34,7 @@ function getFibonacciByLen(len, result) {
   return result.filter(element => String(element).length === len); 
 }
 
-function getFibonacciByRange(min, max, result, index) {
+function getFibonacciByRange(min, max, result) {
   for( let i = 2; ; i++) {
     result[i] =  result[i - 1] + result[i - 2];
 
@@ -44,6 +43,8 @@ function getFibonacciByRange(min, max, result, index) {
       break;
     }
   }
+  // определим в эту переменную индекс с которого слайсить результат
+  let index;
 
   if(result.includes(min)) {
     index = result.indexOf(min);
