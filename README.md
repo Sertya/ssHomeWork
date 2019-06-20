@@ -46,7 +46,7 @@
 
 [Countdown](https://github.com/Sertya/ssHomeWork/tree/master/Countdown "Countdown")
 
-[Date Formatter](https://sertya.github.io/ssHomeWork/DateFormatter "Date Formatter")
+[Date Formatter](https://github.com/Sertya/ssHomeWork/tree/master/DateFormatter "Date Formatter")
 
 
 
