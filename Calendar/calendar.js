@@ -1,8 +1,11 @@
-const date = new Date();
+document.addEventListener("DOMContentLoaded", init);
+
+const today = new Date(),
+      date = new Date();
 
 // запускается при загрузке страницы
-function loadingCalendar() {
-  getTimer();
+function init() {
+  setInterval('getTimer()', 500);
   createCalendar();
   changeMonth();
   changeDay();
@@ -12,32 +15,29 @@ function getTimer() {
   let time = new Date();
 
   document.querySelector('.timer').innerHTML = time.toLocaleTimeString();
-
-  return setTimeout('getTimer()', 500);
 }
 
 // строит календарь
 function createCalendar() {
-  let currYear = date.getFullYear(),
-      currMonth = date.getMonth(),
-      optionsFirst = { 
+  let optionsFirst = { 
         weekday: 'long', 
         day: 'numeric', 
         month: 'long', 
         year: 'numeric'
       },
       optionsSecond = {month: 'long', year: 'numeric'},
-      stringDate = date.toLocaleDateString('ru', optionsFirst),
+      todayDay = today.toLocaleDateString('ru', optionsFirst),
+      todayMonthYear = today.toLocaleDateString('ru', optionsSecond),
       monthYear = date.toLocaleDateString('ru', optionsSecond);
 
-  document.querySelector('.current_string_date').innerText = stringDate;
+  document.querySelector('.current_string_date').innerText = todayDay;
   document.querySelector('.current_month_year').innerText = monthYear;
 
   date.setDate(1);
 
-  let firstDay = date.getDay() == 0 ? 6 : date.getDay() - 1,
-      today = new Date(),
-      currDate = date.getMonth() === today.getMonth() ? today.getDate() : date.getDate();
+  let currMonth = date.getMonth(),
+      firstDay = date.getDay() == 0 ? 6 : date.getDay() - 1,
+      lastDay = new Date (date.getFullYear(), date.getMonth() + 1, 0);
 
   date.setDate(date.getDate() - firstDay);
 
@@ -47,12 +47,32 @@ function createCalendar() {
     let div = document.createElement('div');
 
     if(date.getMonth() !== currMonth) {
-      div.className = 'another_month';
+      div.classList.add('another_month');
+
+      div.innerText = date.getDate();
+      document.querySelector('.calend_table').appendChild(div);
+
+      date.setDate(date.getDate() + 1);
+
+      continue;
     }
 
-    if(date.getDate() === currDate && 
-       date.getMonth() === currMonth) {
-      div.className = 'current_day';
+    if(date.getDate() == 1) {
+      div.classList.add('first_day');
+    }
+
+    if(date.getDate() == lastDay.getDate()) {
+      div.classList.add('last_day');
+    }
+
+    if(monthYear === todayMonthYear) {
+      if(date.getDate() === today.getDate()) {
+        div.classList.add('current_day');
+      }
+    } else {
+      if(date.getDate() === 1) {
+        div.classList.add('active');
+      }
     }
 
     div.innerText = date.getDate();
@@ -60,31 +80,26 @@ function createCalendar() {
 
     date.setDate(date.getDate() + 1);
   }
+
   date.setDate(0);
 }
 
 // слушает событие чтобы изменить месяц
 function changeMonth() {
-  let targetToNext = document.querySelector('.next_month'),
-      targetToPrev = document.querySelector('.prev_month');
+  let targetToListen = document.querySelector('.calend_navigation_month');
 
-  targetToNext.addEventListener('click', changeMonthToNext);
-  targetToPrev.addEventListener('click', changeMonthToPrev);
+  targetToListen.addEventListener('click', changeMonthToEnother);
 }
 
-// строит календарь на следующий месяц
-function changeMonthToNext() {
+// строит календарь на следующий(предыдущий) месяц
+function changeMonthToEnother(event) {
   date.setDate(1);
-  date.setMonth(date.getMonth() + 1);
 
-  clearCalendar();
-  createCalendar(date);
-}
-
-// строит календарь на предыдущий месяц
-function changeMonthToPrev() {
-  date.setDate(1);
-  date.setMonth(date.getMonth() - 1);
+  if(event.target.classList.contains('next_month')) {
+    date.setMonth(date.getMonth() + 1);
+  } else {
+    date.setMonth(date.getMonth() - 1);
+  }
 
   clearCalendar();
   createCalendar(date);
@@ -92,64 +107,68 @@ function changeMonthToPrev() {
 
 // слушает клики чтобы  перемещаться по дням
 function changeDay() {
-  let targetToNext = document.querySelector('.next_day'),
-      targetToPrev = document.querySelector('.prev_day');
+  let targetToListen = document.querySelector('.calend_navigation_day');
 
-  targetToNext.addEventListener('click', changeDayToNext);
-  targetToPrev.addEventListener('click', changeDayToPrev);
+  targetToListen.addEventListener('click', changeDayToNext);
+  
 }
 
-// подсвечивает следующий день
-function changeDayToNext() {
+// подсвечивает следующий/предыдущий день
+function changeDayToNext(event) {
   let currActiveElement = document.querySelector('.active'),
-      nextActiveElement;
+      nextActiveElement,
+      direction;
 
-  if(currActiveElement !== null) {
-    currActiveElement.classList.remove('active');
-  } else {
+  if(currActiveElement === null) {
     currActiveElement = document.querySelector('.current_day');
   }
 
-  nextActiveElement = currActiveElement.nextElementSibling;
+  if(event.target.classList.contains('next_day')) {
+    nextActiveElement = currActiveElement.nextElementSibling;
+    direction = 'next';
+  } else {
+    nextActiveElement = currActiveElement.previousElementSibling;
+    direction = 'prev';
+  }
 
-  if(nextActiveElement) {
-    nextActiveElement.classList.add('active');
+  let isFirst = currActiveElement.classList.contains('first_day'),
+      isLast = currActiveElement.classList.contains('last_day');
+
+  if (!isFirst && !isLast ||
+      isFirst && direction != 'prev' ||
+      isLast && direction != 'next') {
+        currActiveElement.classList.remove('active');
+        nextActiveElement.classList.add('active');
   } else {
     date.setDate(1);
-    date.setMonth(date.getMonth() + 1);
+
+    if(isFirst && direction == 'prev') {
+      date.setMonth(date.getMonth() - 1);
+    }
+    if(isLast && direction == 'next') {
+      date.setMonth(date.getMonth() + 1);
+    }
 
     clearCalendar();
     createCalendar(date);
+    
+    if (direction == 'prev') {
+      let active = document.querySelector('.active');
 
-    document.querySelector('.calend_table').firstChild.classList.add('active');
-  }
+      if(document.querySelector('.active')) {
+        active.classList.remove('active');
+      }
+      
+      document.querySelector('.last_day').classList.add('active');
+    }
+
+    if (direction == 'next' && document.querySelector('.current_day') != null) {
+      document.querySelector('.first_day').classList.add('active');
+    }
+  } 
+
 }
 
-// подсвечивает предыдущий день
-function changeDayToPrev() {
-  let currActiveElement = document.querySelector('.active'),
-      nextActiveElement;
-
-  if(currActiveElement !== null) {
-    currActiveElement.classList.remove('active');
-  } else {
-    currActiveElement = document.querySelector('.current_day');
-  }
-
-  nextActiveElement = currActiveElement.previousElementSibling;
-
-  if(nextActiveElement) {
-    nextActiveElement.classList.add('active');
-  } else {
-    date.setDate(1);
-    date.setMonth(date.getMonth() - 1);
-
-    clearCalendar();
-    createCalendar(date);
-
-    document.querySelector('.calend_table').lastChild.classList.add('active');
-  }
-}
 // очищает календарь
 function clearCalendar() {
   let element = document.querySelector('.calend_table');
